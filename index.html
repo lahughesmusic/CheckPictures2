@@ -24,7 +24,7 @@
         <!-- PIC NUMBERS -->
         <h1 class="label">Put in Picture Numbers </h1>
 
-        <p class="instruction">Go to your Auction Pics folder, <br>Select All (Command + A on Mac, Ctrl + A on PC),
+        <p class="instruction">Go to your Auction Pics folder, <br>Select All (Command + A on Mac, Ctrl + A on PC,
             <br>copy, and
             paste here.
         </p>
@@ -53,9 +53,8 @@
                 if (lot[i].indexOf('-') > 1) {
                     console.log('lot ' + lot[i])
                     lots[i] = regex.exec(lot[i]).toString()
-                    console.log('lot filter ' + lot[i])
                 } else {
-                    lots[i] = lot[i]
+                    lots[i] = lot[i].toLowerCase()
                 }
             }
 
@@ -65,9 +64,11 @@
                     pics[i] = regex.exec(pic[i]).toString()
                     console.log('pic filter ' + pic[i])
                 } else {
-                    pics[i] = pic[i]
+                    pics[i] = pic[i].toLowerCase()
                 }
             }
+
+
             let difference = lots
                 .filter(x => !pics.includes(x))
                 .concat(pics.filter(x => !lots.includes(x)));
