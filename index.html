@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>Check Pics</title>
+    <link rel="stylesheet" href="check.css" />
+</head>
+√
+
+<body>
+    <div id="big">
+
+        <h1 class="main-header">CHECK FOR MISSING PICTURES</h1>
+
+        <!-- LOT NUMBERS  -->
+        <h1 class="label">Put in Lot Numbers</h1>
+
+        <p class="instruction">Go to your spreadsheet, select the entire column under lot numbers, <br> excluding the
+            column
+            header/title, <br>copy,
+            and paste here.</p>
+        <input class='input' name="lot" type="text" />
+
+        <!-- PIC NUMBERS -->
+        <h1 class="label">Put in Picture Numbers </h1>
+
+        <p class="instruction">Go to your Auction Pics folder, <br>Select All (Command + A on Mac, Ctrl + A on PC,
+            <br>copy, and
+            paste here.
+        </p>
+        <input class='input' name="pics" type="text" />
+        <br>
+        <br>
+        <br>
+        <button id='button' onclick="getValueInput()" type="button">CHECK WORK</button>
+        <h1 id="result">Results will show here</h1>
+    </div>
+    <script type="text/javascript">
+
+        const getValueInput = () => {
+
+            let lot = document.getElementsByName('lot')[0].value;
+            lot = lot.split(" ")
+            let pic = document.getElementsByName('pics')[0].value;
+            pic = pic.split(" ")
+            const lots = []
+            const pics = []
+            const regex = /.*(?=-)/
+
+
+
+            for (let i = 0; i < lot.length; i++) {
+                if (lot[i].indexOf('-') > 1) {
+                    console.log('lot ' + lot[i])
+                    lots[i] = regex.exec(lot[i]).toString()
+                    console.log('lot filter ' + lot[i])
+                } else {
+                    lots[i] = lot[i]
+                }
+            }
+
+            for (let i = 0; i < pic.length; i++) {
+                if (pic[i].indexOf('-') > 1) {
+                    console.log('lot ' + pic[i])
+                    pics[i] = regex.exec(pic[i]).toString()
+                    console.log('pic filter ' + pic[i])
+                } else {
+                    pics[i] = pic[i]
+                }
+            }
+            let difference = lots
+                .filter(x => !pics.includes(x))
+                .concat(pics.filter(x => !lots.includes(x)));
+
+            let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+            console.log(difference)
+            console.log(findDuplicates(difference))
+
+
+
+            if (difference.length > 0) {
+                document.getElementById('result').innerHTML = '<p>Missing Pictures</p>' + difference.join('  /  ');
+            } else {
+                document.getElementById('result').innerHTML = '<h1 style="font-size:30px">Good job <br> no missing pictures found</h1>'
+            }
+
+        };
+    </script>
+</body>
+
+</html>
